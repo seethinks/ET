@@ -22,11 +22,7 @@ namespace ETModel
 			object message = Activator.CreateInstance(type);
 			((Google.Protobuf.IMessage)message).MergeFrom(bytes, index, count);
 			ISupportInitialize iSupportInitialize = message as ISupportInitialize;
-			if (iSupportInitialize == null)
-			{
-				return message;
-			}
-			iSupportInitialize.EndInit();
+			iSupportInitialize?.EndInit();
 			return message;
 		}
 		
@@ -35,11 +31,7 @@ namespace ETModel
 			object message = instance;
 			((Google.Protobuf.IMessage)message).MergeFrom(bytes, index, count);
 			ISupportInitialize iSupportInitialize = message as ISupportInitialize;
-			if (iSupportInitialize == null)
-			{
-				return message;
-			}
-			iSupportInitialize.EndInit();
+			iSupportInitialize?.EndInit();
 			return message;
 		}
 		
@@ -48,11 +40,7 @@ namespace ETModel
 			object message = Activator.CreateInstance(type);
 			((Google.Protobuf.IMessage)message).MergeFrom(stream.GetBuffer(), (int)stream.Position, (int)stream.Length);
 			ISupportInitialize iSupportInitialize = message as ISupportInitialize;
-			if (iSupportInitialize == null)
-			{
-				return message;
-			}
-			iSupportInitialize.EndInit();
+			iSupportInitialize?.EndInit();
 			return message;
 		}
 		
@@ -61,11 +49,7 @@ namespace ETModel
 			// 这个message可以从池中获取，减少gc
 			((Google.Protobuf.IMessage)message).MergeFrom(stream.GetBuffer(), (int)stream.Position, (int)stream.Length);
 			ISupportInitialize iSupportInitialize = message as ISupportInitialize;
-			if (iSupportInitialize == null)
-			{
-				return message;
-			}
-			iSupportInitialize.EndInit();
+			iSupportInitialize?.EndInit();
 			return message;
 		}
 	}

@@ -1,10 +1,8 @@
 ﻿using System;
 using ETModel;
-using Google.Protobuf;
 using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Runtime.Intepreter;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
-using IMessage = Google.Protobuf.IMessage;
 
 namespace Google.Protobuf
 {
@@ -35,19 +33,13 @@ namespace Google.Protobuf
 
         public class Adaptor: MyAdaptor, IMessage
         {
-            public Adaptor(AppDomain appdomain, ILTypeInstance instance): base(appdomain, instance)
-            {
-            }
-
-            protected override AdaptHelper.AdaptMethod[] GetAdaptMethods()
-            {
-                AdaptHelper.AdaptMethod[] methods =
-                {
+            public Adaptor(AppDomain appdomain, ILTypeInstance instance): base(appdomain, instance, 
+                new [] {
                     new AdaptHelper.AdaptMethod { Name = "MergeFrom", ParamCount = 1 },
                     new AdaptHelper.AdaptMethod { Name = "WriteTo", ParamCount = 1 },
                     new AdaptHelper.AdaptMethod { Name = "CalculateSize", ParamCount = 0 },
-                };
-                return methods;
+                })
+            {
             }
 
             public void MergeFrom(CodedInputStream input)

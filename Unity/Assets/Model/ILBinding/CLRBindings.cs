@@ -45,8 +45,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Type_ILTypeInstance_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_HashSet_1_ILTypeInstance_Binding.Register(app);
             System_Linq_Enumerable_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Type_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
-            System_Collections_Generic_KeyValuePair_2_Type_ILTypeInstance_Binding.Register(app);
             System_Collections_Generic_HashSet_1_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_List_1_Object_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_List_1_ILTypeInstance_Binding.Register(app);
@@ -63,6 +61,11 @@ namespace ILRuntime.Runtime.Generated
             ETModel_EventProxy_Binding.Register(app);
             ETModel_EventSystem_Binding.Register(app);
             System_Collections_Generic_Queue_1_ILTypeInstance_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Type_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_KeyValuePair_2_Type_ILTypeInstance_Binding.Register(app);
+            System_IO_MemoryStream_Binding.Register(app);
+            ETModel_ProtobufHelper_Binding.Register(app);
+            ETModel_ProtobufPacker_Binding.Register(app);
             ETModel_Entity_Binding.Register(app);
             ETModel_ResourcesComponent_Binding.Register(app);
             ETModel_ConfigAttribute_Binding.Register(app);
@@ -132,7 +135,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Type_Queue_1_Object_Binding.Register(app);
             System_Collections_Generic_Queue_1_Object_Binding.Register(app);
             ETModel_DoubleMap_2_UInt16_Type_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_UInt16_Object_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_UInt16_Google_Protobuf_Adapt_IMessage_Binding_Adaptor_Binding.Register(app);
             ETModel_MessageAttribute_Binding.Register(app);
             ETModel_SessionCallbackComponent_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_Action_1_Google_Protobuf_Adapt_IMessage_Binding_Adaptor_Binding.Register(app);

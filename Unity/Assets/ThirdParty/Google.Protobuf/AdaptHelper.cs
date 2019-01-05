@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using ILRuntime.CLR.Method;
 using ILRuntime.CLR.TypeSystem;
 using ILRuntime.Runtime.Enviorment;
@@ -15,60 +14,68 @@ public static class AdaptHelper
         public IMethod Method;
     }
 
-
     public static IMethod GetMethod(this ILType type, AdaptMethod m)
     {
         if (m.Method != null)
-            return m.Method;
-
-        m.Method = type.GetMethod(m.Name, m.ParamCount);
-        if (m.Method == null)
         {
-            string baseClass = "";
-            if (type.FirstCLRBaseType != null)
-            {
-                baseClass = type.FirstCLRBaseType.FullName;
-            }
-            else if (type.FirstCLRInterface != null)
-            {
-                baseClass = type.FirstCLRInterface.FullName;
-            }
-
-            throw new Exception(string.Format("can't find the method: {0}.{1}:{2}, paramCount={3}", type.FullName, m.Name, baseClass, m.ParamCount));
+            return m.Method;
         }
 
-        return m.Method;
+        m.Method = type.GetMethod(m.Name, m.ParamCount);
+
+        if (m.Method != null)
+        {
+            return m.Method;
+        }
+
+        string baseClass = "";
+        if (type.FirstCLRBaseType != null)
+        {
+            baseClass = type.FirstCLRBaseType.FullName;
+        }
+        else if (type.FirstCLRInterface != null)
+        {
+            baseClass = type.FirstCLRInterface.FullName;
+        }
+
+        throw new Exception($"can't find the method: {type.FullName}.{m.Name}:{baseClass}, paramCount={m.ParamCount}");
+
     }
 }
 
-public abstract class MyAdaptor : CrossBindingAdaptorType
+public abstract class MyAdaptor: CrossBindingAdaptorType
 {
     protected AppDomain AppDomain { get; set; }
-    protected ILTypeInstance _instance;
-    private AdaptHelper.AdaptMethod[] _methods;
+    protected ILTypeInstance instance;
+    private readonly AdaptHelper.AdaptMethod[] methods;
 
-    protected abstract AdaptHelper.AdaptMethod[] GetAdaptMethods();
+    protected MyAdaptor(AdaptHelper.AdaptMethod[] methods)
+    {
+        this.methods = methods;
+    }
 
     public ILTypeInstance ILInstance
     {
-        get { return _instance; }
-        set { _instance = value; }
+        get
+        {
+            return this.instance;
+        }
+        set
+        {
+            this.instance = value;
+        }
     }
 
     protected object Invoke(int index, params object[] p)
     {
-        if (_methods == null)
-            _methods = GetAdaptMethods();
-
-        var m = _instance.Type.GetMethod(_methods[index]);
-        return AppDomain.Invoke(m, _instance, p);
+        IMethod m = this.instance.Type.GetMethod(this.methods[index]);
+        return AppDomain.Invoke(m, this.instance, p);
     }
 
-    protected MyAdaptor(AppDomain appdomain, ILTypeInstance instance)
+    protected MyAdaptor(AppDomain appdomain, ILTypeInstance instance, AdaptHelper.AdaptMethod[] methods)
     {
+        this.methods = methods;
         AppDomain = appdomain;
-        _instance = instance;
+        this.instance = instance;
     }
-
 }
-

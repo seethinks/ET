@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using ETModel;
 
 namespace ETHotfix
@@ -52,8 +51,9 @@ namespace ETHotfix
 		public void Run(ETModel.Session s, byte flag, ushort opcode, MemoryStream memoryStream)
 		{
 			OpcodeTypeComponent opcodeTypeComponent = Game.Scene.GetComponent<OpcodeTypeComponent>();
-			object instance = opcodeTypeComponent.GetInstance(opcode);
-			object message = this.session.Network.MessagePacker.DeserializeFrom(instance, memoryStream);
+			object message = opcodeTypeComponent.GetInstance(opcode);
+			// 注意下面这个调用不能用方法返回的变量，否则GetType()返回错误的类型，应该是ILRT的bug，暂时绕过去
+			this.session.Network.MessagePacker.DeserializeFrom(message, memoryStream);
 
 			if (OpcodeHelper.IsNeedDebugLogMessage(opcode))
 			{
